@@ -1,0 +1,18 @@
+<odoo>
+
+    <record id = "doctor_1" model = "hr.hospital.doctor">
+        <field name = "name">Іван Іванов</field>
+        <field name = "specialization">Терапевт</field>
+    </record>
+
+    <record id = "doctor_2" model = "hr.hospital.doctor">
+        <field name = "name">Марія Петренко</field>
+        <field name = "specialization">Кардіолог</field>
+    </record>
+
+    <record id = "doctor_3" model = "hr.hospital.doctor">
+        <field name = "name">Олександр Коваль</field>
+        <field name = "specialization">Хірург</field>
+    </record>
+
+</odoo>

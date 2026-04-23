@@ -1,0 +1,9 @@
+<odoo>
+
+    <record id = "action_hospital_visit" model = "ir.actions.act_window">
+        <field name = "name">Visits</field>
+        <field name = "res_model">hr.hospital.visit</field>
+        <field name = "view_mode">list,form</field>
+    </record>
+    
+</odoo>
