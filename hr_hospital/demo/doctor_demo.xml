@@ -1,18 +1,41 @@
 <odoo>
+    <data noupdate="0">
 
-    <record id = "doctor_1" model = "hr.hospital.doctor">
-        <field name = "name">Іван Іванов</field>
-        <field name = "specialization">Терапевт</field>
+    <record id="doctor_1" model="hr.hospital.doctor">
+        <field name="name">John Smith</field>
+        <field name="specialization">Therapist</field>
+        <field name="category_id" ref="doctor_category_specialist"/>
+        <field name="gender">male</field>
+        <field name="birthday">1980-04-15</field>
+        <field name="blood_type">a_plus</field>
     </record>
 
-    <record id = "doctor_2" model = "hr.hospital.doctor">
-        <field name = "name">Марія Петренко</field>
-        <field name = "specialization">Кардіолог</field>
+    <record id="doctor_2" model="hr.hospital.doctor">
+        <field name="name">Mary Johnson</field>
+        <field name="specialization">Cardiologist</field>
+        <field name="category_id" ref="doctor_category_top"/>
+        <field name="gender">female</field>
+        <field name="birthday">1975-09-21</field>
+        <field name="blood_type">o_plus</field>
     </record>
 
-    <record id = "doctor_3" model = "hr.hospital.doctor">
-        <field name = "name">Олександр Коваль</field>
-        <field name = "specialization">Хірург</field>
+    <record id="doctor_3" model="hr.hospital.doctor">
+        <field name="name">Alexander Brown</field>
+        <field name="specialization">Surgeon</field>
+        <field name="category_id" ref="doctor_category_top"/>
+        <field name="gender">male</field>
+        <field name="birthday">1972-11-02</field>
+        <field name="blood_type">b_plus</field>
     </record>
 
+    <record id="doctor_4" model="hr.hospital.doctor">
+        <field name="name">Anna Williams</field>
+        <field name="specialization">Pediatrician</field>
+        <field name="category_id" ref="doctor_category_intern"/>
+        <field name="gender">female</field>
+        <field name="birthday">1998-06-30</field>
+        <field name="mentor_id" ref="doctor_2"/>
+    </record>
+
+    </data>
 </odoo>

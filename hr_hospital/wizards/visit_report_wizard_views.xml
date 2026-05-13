@@ -1,0 +1,50 @@
+<odoo>
+
+    <record id="view_visit_report_wizard_form" model="ir.ui.view">
+        <field name="name">visit.report.wizard.form</field>
+        <field name="model">visit.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Visit report">
+                <group>
+                    <group>
+                        <field name="doctor_ids" widget="many2many_tags"/>
+                        <field name="patient_ids" widget="many2many_tags"/>
+                        <field name="disease_id"/>
+                    </group>
+                    <group>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                        <field name="only_done"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_show_visits" type="object"
+                            string="Show visits" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_visit_report_wizard_doctor"
+            model="ir.actions.act_window">
+        <field name="name">Visit report</field>
+        <field name="res_model">visit.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="model_hr_hospital_doctor"/>
+        <field name="binding_view_types">list,form</field>
+    </record>
+
+    <record id="action_visit_report_wizard_patient"
+            model="ir.actions.act_window">
+        <field name="name">Visit report</field>
+        <field name="res_model">visit.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="model_hr_hospital_patient"/>
+        <field name="binding_view_types">list,form</field>
+    </record>
+
+</odoo>

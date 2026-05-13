@@ -1,21 +1,32 @@
 <odoo>
+    <data noupdate="0">
 
-    <record id = "patient_1" model = "hr.hospital.patient">
-        <field name = "name">Василь Стус</field>
-        <field name = "gender">male</field>
-        <field name = "doctor_id" ref = "doctor_1"/>
+    <record id="patient_1" model="hr.hospital.patient">
+        <field name="name">William Stone</field>
+        <field name="gender">male</field>
+        <field name="birthday">1985-01-08</field>
+        <field name="blood_type">o_plus</field>
+        <field name="doctor_id" ref="doctor_1"/>
+        <field name="insurance_policy_number">UA-0001-0001</field>
     </record>
 
-    <record id = "patient_2" model = "hr.hospital.patient">
-        <field name = "name">Леся Українка</field>
-        <field name = "gender">female</field>
-        <field name = "doctor_id" ref = "doctor_2"/>
+    <record id="patient_2" model="hr.hospital.patient">
+        <field name="name">Leslie Anderson</field>
+        <field name="gender">female</field>
+        <field name="birthday">1990-02-25</field>
+        <field name="blood_type">a_plus</field>
+        <field name="doctor_id" ref="doctor_2"/>
+        <field name="insurance_policy_number">UA-0001-0002</field>
     </record>
 
-    <record id = "patient_3" model = "hr.hospital.patient">
-        <field name = "name">Тарас Шевченко</field>
-        <field name = "gender">male</field>
-        <field name = "doctor_id" ref = "doctor_1"/>
+    <record id="patient_3" model="hr.hospital.patient">
+        <field name="name">Thomas Shevchenko</field>
+        <field name="gender">male</field>
+        <field name="birthday">1979-03-09</field>
+        <field name="blood_type">b_plus</field>
+        <field name="doctor_id" ref="doctor_1"/>
+        <field name="insurance_policy_number">UA-0001-0003</field>
     </record>
 
+    </data>
 </odoo>

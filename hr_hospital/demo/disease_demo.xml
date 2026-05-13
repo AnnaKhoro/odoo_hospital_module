@@ -1,0 +1,28 @@
+<odoo>
+    <data noupdate="0">
+
+    <record id="disease_respiratory" model="hr.hospital.disease">
+        <field name="name">Respiratory tract diseases</field>
+    </record>
+
+    <record id="disease_flu_demo" model="hr.hospital.disease">
+        <field name="name">Seasonal flu</field>
+        <field name="parent_id" ref="disease_respiratory"/>
+    </record>
+
+    <record id="disease_flu_h1n1" model="hr.hospital.disease">
+        <field name="name">H1N1 flu</field>
+        <field name="parent_id" ref="disease_flu_demo"/>
+    </record>
+
+    <record id="disease_pneumonia" model="hr.hospital.disease">
+        <field name="name">Pneumonia</field>
+        <field name="parent_id" ref="disease_respiratory"/>
+    </record>
+
+    <record id="disease_cardio" model="hr.hospital.disease">
+        <field name="name">Cardiovascular diseases</field>
+    </record>
+
+    </data>
+</odoo>

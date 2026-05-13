@@ -2,11 +2,11 @@
 
     <data noupdate = "1">
         <record id = "disease_flu" model = "hr.hospital.disease">
-            <field name = "name">Грип</field>
+            <field name = "name">Flu</field>
         </record>
 
         <record id = "disease_cold" model = "hr.hospital.disease">
-            <field name = "name">Застуда</field>
+            <field name = "name">Cold</field>
         </record>
 
         <record id = "disease_covid" model = "hr.hospital.disease">

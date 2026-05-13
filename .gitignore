@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual envs
+venv/
+env/
+.venv/
+
+# IDE / editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Claude Code worktrees / local agent state
+.claude/
+
+# Local logs / dumps
+*.log
+*.sql
+*.dump
