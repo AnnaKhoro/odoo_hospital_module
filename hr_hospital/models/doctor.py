@@ -24,6 +24,30 @@ class HospitalDoctor(models.Model):
         string='Mentor',
         domain="[('is_intern', '=', False)]",
     )
+    mentee_ids = fields.One2many(
+        'hr.hospital.doctor', 'mentor_id', string='Interns (mentees)',
+    )
+    color = fields.Integer(string='Color Index', default=0)
+    visit_count = fields.Integer(
+        string='Visits', compute='_compute_visit_count',
+    )
+
+    def _compute_visit_count(self):
+        for rec in self:
+            rec.visit_count = self.env['hr.hospital.visit'].search_count(
+                [('doctor_id', '=', rec.id)]
+            )
+
+    def action_open_visits(self):
+        self.ensure_one()
+        return {
+            'name': 'Visits',
+            'type': 'ir.actions.act_window',
+            'res_model': 'hr.hospital.visit',
+            'view_mode': 'list,form,calendar',
+            'domain': [('doctor_id', '=', self.id)],
+            'context': {'default_doctor_id': self.id},
+        }
 
     _INTERN_KEYWORDS = ('інтерн', 'intern')
 

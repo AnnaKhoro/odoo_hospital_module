@@ -20,6 +20,42 @@ class HospitalPatient(models.Model):
         string='Insurance policy number',
         size=20,
     )
+    phone = fields.Char(string='Phone')
+    visit_ids = fields.One2many(
+        'hr.hospital.visit', 'patient_id', string='Visit history',
+    )
+    visit_count = fields.Integer(
+        string='Visits count', compute='_compute_visit_count',
+    )
+
+    def _compute_visit_count(self):
+        for rec in self:
+            rec.visit_count = len(rec.visit_ids)
+
+    def action_open_visits(self):
+        self.ensure_one()
+        return {
+            'name': 'Visits',
+            'type': 'ir.actions.act_window',
+            'res_model': 'hr.hospital.visit',
+            'view_mode': 'list,form,calendar',
+            'domain': [('patient_id', '=', self.id)],
+            'context': {'default_patient_id': self.id},
+        }
+
+    def action_new_visit(self):
+        self.ensure_one()
+        return {
+            'name': 'New visit',
+            'type': 'ir.actions.act_window',
+            'res_model': 'hr.hospital.visit',
+            'view_mode': 'form',
+            'target': 'current',
+            'context': {
+                'default_patient_id': self.id,
+                'default_doctor_id': self.doctor_id.id,
+            },
+        }
 
     def write(self, vals):
         track = 'doctor_id' in vals and not self.env.context.get('skip_doctor_history')

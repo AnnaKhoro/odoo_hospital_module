@@ -7,3 +7,4 @@ access_hr_hospital_doctor_category,hr.hospital.doctor.category,model_hr_hospital
 access_hr_hospital_doctor_history,hr.hospital.doctor.history,model_hr_hospital_doctor_history,base.group_user,1,1,1,1
 access_mass_reassign_doctor_wizard,mass.reassign.doctor.wizard,model_mass_reassign_doctor_wizard,base.group_user,1,1,1,1
 access_visit_report_wizard,visit.report.wizard,model_visit_report_wizard,base.group_user,1,1,1,1
+access_disease_report_wizard,disease.report.wizard,model_disease_report_wizard,base.group_user,1,1,1,1

@@ -44,13 +44,7 @@ class HospitalDisease(models.Model):
 
     @api.constrains('parent_id')
     def _check_parent_recursion(self):
-        for rec in self:
-            parent = rec.parent_id
-            visited = set()
-            while parent:
-                if parent.id == rec.id:
-                    raise ValidationError('You cannot create a recursive disease hierarchy.')
-                if parent.id in visited:
-                    break
-                visited.add(parent.id)
-                parent = parent.parent_id
+        if self._has_cycle():
+            raise ValidationError(
+                'You cannot create a recursive disease hierarchy.'
+            )

@@ -4,7 +4,7 @@
     'author': 'Anna Khoroshylova',
     'category': 'Human Resources',
     'license': 'LGPL-3',
-    'version': '19.0.1.1.0',
+    'version': '19.0.1.2.0',
 
     'depends': [
         'base',
@@ -25,6 +25,7 @@
 
         'wizards/mass_reassign_doctor_wizard_views.xml',
         'wizards/visit_report_wizard_views.xml',
+        'wizards/disease_report_wizard_views.xml',
 
         'views/menu_views.xml',
     ],

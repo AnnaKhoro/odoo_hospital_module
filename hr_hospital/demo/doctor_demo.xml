@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data noupdate="0">
 
@@ -35,6 +36,24 @@
         <field name="gender">female</field>
         <field name="birthday">1998-06-30</field>
         <field name="mentor_id" ref="doctor_2"/>
+    </record>
+
+    <record id="doctor_5" model="hr.hospital.doctor">
+        <field name="name">Peter Wilson</field>
+        <field name="specialization">Therapist (intern)</field>
+        <field name="category_id" ref="doctor_category_intern"/>
+        <field name="gender">male</field>
+        <field name="birthday">2000-02-12</field>
+        <field name="mentor_id" ref="doctor_1"/>
+    </record>
+
+    <record id="doctor_6" model="hr.hospital.doctor">
+        <field name="name">Olga Martin</field>
+        <field name="specialization">Surgeon (intern)</field>
+        <field name="category_id" ref="doctor_category_intern"/>
+        <field name="gender">female</field>
+        <field name="birthday">1999-08-22</field>
+        <field name="mentor_id" ref="doctor_3"/>
     </record>
 
     </data>

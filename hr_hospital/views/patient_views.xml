@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
     <record id="view_hospital_patient_tree" model="ir.ui.view">
@@ -6,6 +7,7 @@
         <field name="arch" type="xml">
             <list>
                 <field name="name"/>
+                <field name="phone"/>
                 <field name="gender"/>
                 <field name="age"/>
                 <field name="doctor_id"/>
@@ -19,10 +21,27 @@
         <field name="model">hr.hospital.patient</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <button name="action_new_visit"
+                            type="object"
+                            string="New visit"
+                            class="btn-primary"/>
+                </header>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_visits"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-stethoscope">
+                            <field name="visit_count"
+                                   widget="statinfo"
+                                   string="Visits"/>
+                        </button>
+                    </div>
                     <group>
                         <group>
                             <field name="name"/>
+                            <field name="phone"/>
                             <field name="doctor_id"/>
                             <field name="insurance_policy_number"/>
                         </group>
@@ -47,6 +66,24 @@
                     </notebook>
                 </sheet>
             </form>
+        </field>
+    </record>
+
+    <record id="view_hospital_patient_search" model="ir.ui.view">
+        <field name="name">hr.hospital.patient.search</field>
+        <field name="model">hr.hospital.patient</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Patient"
+                       filter_domain="['|', ('name', 'ilike', self),
+                                            ('phone', 'ilike', self)]"/>
+                <field name="phone"/>
+                <field name="doctor_id"/>
+                <filter name="group_doctor" string="Personal doctor"
+                        context="{'group_by': 'doctor_id'}"/>
+                <filter name="group_gender" string="Gender"
+                        context="{'group_by': 'gender'}"/>
+            </search>
         </field>
     </record>
 

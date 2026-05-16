@@ -1,5 +1,4 @@
-from odoo import api, fields, models
-from odoo.exceptions import ValidationError
+from odoo import fields, models
 
 
 class HospitalDoctorCategory(models.Model):
@@ -19,19 +18,3 @@ class HospitalDoctorCategory(models.Model):
         'unique(name)',
         'A category with this name already exists.',
     )
-
-    @api.constrains('name')
-    def _check_name_unique(self):
-        for rec in self:
-            name = (rec.name or '').strip().lower()
-            if not name:
-                continue
-            duplicate = self.search(
-                [
-                    ('id', '!=', rec.id),
-                    ('name', '=ilike', name),
-                ],
-                limit=1,
-            )
-            if duplicate:
-                raise ValidationError('A category with this name already exists.')

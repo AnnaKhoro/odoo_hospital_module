@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
     <record id="view_disease_tree" model="ir.ui.view">
@@ -8,6 +9,22 @@
                 <field name="complete_name"/>
                 <field name="parent_id"/>
             </list>
+        </field>
+    </record>
+
+    <record id="view_disease_search" model="ir.ui.view">
+        <field name="name">hr.hospital.disease.search</field>
+        <field name="model">hr.hospital.disease</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="parent_id"/>
+                <searchpanel>
+                    <field name="parent_id" string="Parent disease"
+                           icon="fa-folder" enable_counters="1"
+                           hierarchize="1" select="multi"/>
+                </searchpanel>
+            </search>
         </field>
     </record>
 
