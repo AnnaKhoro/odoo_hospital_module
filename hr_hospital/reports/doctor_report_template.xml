@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="report_doctor_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doctor">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: 'Helvetica', Arial, sans-serif; font-size: 11px; color: #222;">
+
+                        <style>
+                            .doctor-report h1,
+                            .doctor-report h2,
+                            .doctor-report h3 { font-family: inherit; color: #2c3e50; margin-top: 14px; margin-bottom: 6px; }
+                            .doctor-report h1 { font-size: 18px; font-weight: 700; }
+                            .doctor-report h2 { font-size: 14px; font-weight: 600; border-bottom: 1px solid #d0d0d0; padding-bottom: 3px; }
+                            .doctor-report p, .doctor-report div, .doctor-report td, .doctor-report th { font-size: 11px; }
+                            .doctor-report table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+                            .doctor-report table th { background-color: #f3f4f6; text-align: center; vertical-align: middle; padding: 5px 7px; border: 1px solid #c8c8c8; font-weight: 600; }
+                            .doctor-report table td { padding: 5px 7px; border: 1px solid #d8d8d8; vertical-align: top; }
+                            .doctor-report .subtitle { color: #555; font-size: 12px; margin-bottom: 12px; }
+                            .doctor-report .report-footer { margin-top: 20px; padding-top: 8px; border-top: 1px solid #d0d0d0; font-size: 10px; color: #666; }
+                        </style>
+
+                        <div class="doctor-report">
+
+                            <h1>
+                                <span t-field="doctor.name"/>
+                                <t t-if="doctor.specialization">
+                                    <span> — </span>
+                                    <span t-field="doctor.specialization"/>
+                                </t>
+                            </h1>
+                            <div class="subtitle" t-if="doctor.category_id">
+                                Category: <span t-field="doctor.category_id"/>
+                            </div>
+
+                            <h2>Visit history</h2>
+                            <t t-set="visits"
+                               t-value="doctor.env['hr.hospital.visit'].search(
+                                   [('doctor_id', '=', doctor.id)],
+                                   order='scheduled_date desc')"/>
+                            <table t-if="visits">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 130px;">Scheduled date</th>
+                                        <th>Patient</th>
+                                        <th>Disease</th>
+                                        <th style="width: 110px;">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="visits" t-as="visit">
+                                        <t t-set="state_color"
+                                           t-value="{'planned': '#fff3b0', 'done': '#b7e4b7', 'cancelled': '#f5b7b1'}.get(visit.state, '#ffffff')"/>
+                                        <td><span t-field="visit.scheduled_date"/></td>
+                                        <td><span t-field="visit.patient_id"/></td>
+                                        <td><span t-field="visit.disease_id"/></td>
+                                        <td t-attf-style="background-color: #{state_color}; font-weight: 600; text-align: center;">
+                                            <t t-if="visit.state == 'planned'">Planned</t>
+                                            <t t-if="visit.state == 'done'">Completed</t>
+                                            <t t-if="visit.state == 'cancelled'">Cancelled</t>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p t-if="not visits" style="color:#888;">No visits found.</p>
+
+                            <h2>Patients</h2>
+                            <table t-if="doctor.patient_ids">
+                                <thead>
+                                    <tr>
+                                        <th>Full Name</th>
+                                        <th style="width: 90px;">Gender</th>
+                                        <th style="width: 110px;">Date of Birth</th>
+                                        <th style="width: 140px;">Phone</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="doctor.patient_ids" t-as="patient">
+                                        <td><span t-field="patient.name"/></td>
+                                        <td><span t-field="patient.gender"/></td>
+                                        <td><span t-field="patient.birthday"/></td>
+                                        <td><span t-field="patient.phone"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p t-if="not doctor.patient_ids" style="color:#888;">No patients assigned.</p>
+
+                            <div class="report-footer">
+                                <span>Printed: </span>
+                                <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+                                <t t-if="doctor.env.company.city">
+                                    <span> | City: </span>
+                                    <span t-esc="doctor.env.company.city"/>
+                                </t>
+                            </div>
+
+                        </div>
+
+                        <p style="page-break-after: always;" t-if="not doctor_last"/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

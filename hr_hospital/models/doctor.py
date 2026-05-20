@@ -27,7 +27,19 @@ class HospitalDoctor(models.Model):
     mentee_ids = fields.One2many(
         'hr.hospital.doctor', 'mentor_id', string='Interns (mentees)',
     )
+    mentee_names = fields.Char(
+        string='Interns list',
+        compute='_compute_mentee_names',
+    )
+
+    @api.depends('mentee_ids', 'mentee_ids.name')
+    def _compute_mentee_names(self):
+        for rec in self:
+            rec.mentee_names = ', '.join(rec.mentee_ids.mapped('name'))
     color = fields.Integer(string='Color Index', default=0)
+    patient_ids = fields.One2many(
+        'hr.hospital.patient', 'doctor_id', string='Patients',
+    )
     visit_count = fields.Integer(
         string='Visits', compute='_compute_visit_count',
     )
