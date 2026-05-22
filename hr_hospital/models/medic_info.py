@@ -4,6 +4,11 @@ from odoo import api, fields, models
 
 
 class HospitalMedicInfo(models.AbstractModel):
+    """Abstract medical info — mixed into doctor and patient models.
+
+    Provides blood type, gender, birthday and a computed age.
+    """
+
     _name = 'hr.hospital.medic.info'
     _description = 'Hospital medical information (abstract)'
 

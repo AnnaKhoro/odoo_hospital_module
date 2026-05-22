@@ -3,13 +3,19 @@ from odoo.exceptions import ValidationError
 
 
 class HospitalDisease(models.Model):
+    """Disease classifier with parent/child hierarchy.
+
+    Uses ``_parent_store`` for efficient hierarchical queries. The
+    ``complete_name`` shows the full path (e.g. "Respiratory / Flu").
+    """
+
     _name = 'hr.hospital.disease'
     _description = 'Disease Type'
     _parent_store = True
     _parent_name = 'parent_id'
-    _order = 'complete_name'
+    _order = 'name'
 
-    name = fields.Char(string='Disease Name', required=True)
+    name = fields.Char(string='Disease Name', required=True, translate=True)
     parent_id = fields.Many2one(
         'hr.hospital.disease',
         string='Parent disease',
@@ -26,7 +32,6 @@ class HospitalDisease(models.Model):
         string='Full Name',
         compute='_compute_complete_name',
         recursive=True,
-        store=True,
     )
 
     @api.depends('name', 'parent_id.complete_name')

@@ -100,6 +100,8 @@
                 <field name="category_id"/>
                 <field name="mentee_ids"/>
                 <field name="mentee_names"/>
+                <field name="mentor_label"/>
+                <field name="mentees_label"/>
                 <templates>
                     <t t-name="menu">
                         <a class="dropdown-item" role="menuitem"
@@ -140,14 +142,12 @@
                                    aria-label="Qualification"/>
                                 <field name="category_id"/>
                             </div>
-                            <div t-if="record.mentor_id.raw_value">
-                                <strong>Mentor: </strong>
-                                <field name="mentor_id"/>
+                            <div t-if="record.mentor_label.raw_value">
+                                <b><field name="mentor_label"/></b>
                             </div>
-                            <div t-if="record.mentee_names.raw_value"
+                            <div t-if="record.mentees_label.raw_value"
                                  class="mt-2">
-                                <strong>Interns: </strong>
-                                <field name="mentee_names"/>
+                                <b><field name="mentees_label"/></b>
                             </div>
                         </div>
                     </t>

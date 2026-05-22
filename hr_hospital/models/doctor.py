@@ -1,14 +1,21 @@
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
 class HospitalDoctor(models.Model):
+    """Hospital doctor.
+
+    Inherits the abstract ``hr.hospital.medic.info`` for shared medical
+    fields (blood type, gender, birthday, age). Tracks qualification,
+    mentor/intern relationship and patient/visit counters.
+    """
+
     _name = 'hr.hospital.doctor'
     _inherit = ['hr.hospital.medic.info']
     _description = 'Hospital Doctor'
 
     name = fields.Char(string='Full Name', required=True)
-    specialization = fields.Char(string='Specialization')
+    specialization = fields.Char(string='Specialization', translate=True)
     category_id = fields.Many2one(
         'hr.hospital.doctor.category',
         string='Category',
@@ -34,8 +41,30 @@ class HospitalDoctor(models.Model):
 
     @api.depends('mentee_ids', 'mentee_ids.name')
     def _compute_mentee_names(self):
+        """Comma-separated names of mentee doctors (for kanban display)."""
         for rec in self:
             rec.mentee_names = ', '.join(rec.mentee_ids.mapped('name'))
+
+    mentor_label = fields.Char(
+        string='Mentor label',
+        compute='_compute_kanban_labels',
+    )
+    mentees_label = fields.Char(
+        string='Interns label',
+        compute='_compute_kanban_labels',
+    )
+
+    @api.depends('mentor_id', 'mentee_names')
+    def _compute_kanban_labels(self):
+        for rec in self:
+            rec.mentor_label = (
+                _('Mentor: %s', rec.mentor_id.name)
+                if rec.mentor_id else ''
+            )
+            rec.mentees_label = (
+                _('Interns: %s', rec.mentee_names)
+                if rec.mentee_names else ''
+            )
     color = fields.Integer(string='Color Index', default=0)
     patient_ids = fields.One2many(
         'hr.hospital.patient', 'doctor_id', string='Patients',
@@ -45,12 +74,14 @@ class HospitalDoctor(models.Model):
     )
 
     def _compute_visit_count(self):
+        """Count of visits where this doctor is the assigned doctor."""
         for rec in self:
             rec.visit_count = self.env['hr.hospital.visit'].search_count(
                 [('doctor_id', '=', rec.id)]
             )
 
     def action_open_visits(self):
+        """Open the list of visits for this doctor (stat button action)."""
         self.ensure_one()
         return {
             'name': 'Visits',
@@ -65,12 +96,18 @@ class HospitalDoctor(models.Model):
 
     @api.depends('category_id', 'category_id.name')
     def _compute_is_intern(self):
+        """True iff category name contains an 'intern' keyword."""
         for rec in self:
             name = (rec.category_id.name or '').lower() if rec.category_id else ''
             rec.is_intern = any(kw in name for kw in self._INTERN_KEYWORDS)
 
     @api.constrains('mentor_id', 'is_intern', 'category_id')
     def _check_mentor_not_intern(self):
+        """Mentors cannot be interns themselves.
+
+        Also blocks demoting a doctor to 'Intern' while they still
+        mentor other doctors.
+        """
         for rec in self:
             if rec.mentor_id and rec.mentor_id.is_intern:
                 raise ValidationError('An intern cannot be selected as a mentor.')

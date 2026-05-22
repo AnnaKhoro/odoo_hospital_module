@@ -21,6 +21,10 @@ class HospitalPatient(models.Model):
         size=20,
     )
     phone = fields.Char(string='Phone')
+    user_id = fields.Many2one(
+        'res.users', string='System User',
+        help='Linked portal user (used for security record rules).',
+    )
     visit_ids = fields.One2many(
         'hr.hospital.visit', 'patient_id', string='Visit history',
     )

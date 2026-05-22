@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Groups: each implies the previous, forming a cascade. -->
+        <record id="group_hospital_patient" model="res.groups">
+            <field name="name">Hospital / Patient</field>
+        </record>
+
+        <record id="group_hospital_intern" model="res.groups">
+            <field name="name">Hospital / Intern</field>
+            <field name="implied_ids"
+                   eval="[(4, ref('group_hospital_patient'))]"/>
+        </record>
+
+        <record id="group_hospital_doctor" model="res.groups">
+            <field name="name">Hospital / Doctor</field>
+            <field name="implied_ids"
+                   eval="[(4, ref('group_hospital_intern'))]"/>
+        </record>
+
+        <record id="group_hospital_manager" model="res.groups">
+            <field name="name">Hospital / Manager</field>
+            <field name="implied_ids"
+                   eval="[(4, ref('group_hospital_doctor'))]"/>
+        </record>
+
+        <record id="group_hospital_admin" model="res.groups">
+            <field name="name">Hospital / Administrator</field>
+            <field name="implied_ids"
+                   eval="[(4, ref('group_hospital_manager'))]"/>
+        </record>
+
+        <!--
+            Automatically grant Hospital / Administrator rights to
+            anyone who has the technical "Settings" group, i.e. the
+            standard Odoo admin user. This is the standard Odoo way
+            to wire a module's top-level group to system admins.
+        -->
+        <record id="base.group_system" model="res.groups">
+            <field name="implied_ids"
+                   eval="[(4, ref('group_hospital_admin'))]"/>
+        </record>
+
+        <!-- Record rules for hr.hospital.visit -->
+        <record id="rule_visit_patient_own" model="ir.rule">
+            <field name="name">Patient: only own visits</field>
+            <field name="model_id" ref="model_hr_hospital_visit"/>
+            <field name="domain_force">
+                [('patient_id.user_id', '=', user.id)]
+            </field>
+            <field name="groups"
+                   eval="[(4, ref('group_hospital_patient'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="rule_visit_intern_own" model="ir.rule">
+            <field name="name">Intern: own visits</field>
+            <field name="model_id" ref="model_hr_hospital_visit"/>
+            <field name="domain_force">
+                [('doctor_id.user_id', '=', user.id)]
+            </field>
+            <field name="groups"
+                   eval="[(4, ref('group_hospital_intern'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="rule_visit_doctor_own_and_mentees" model="ir.rule">
+            <field name="name">Doctor: own and mentees' visits</field>
+            <field name="model_id" ref="model_hr_hospital_visit"/>
+            <field name="domain_force">
+                ['|',
+                 ('doctor_id.user_id', '=', user.id),
+                 ('doctor_id.mentor_id.user_id', '=', user.id)]
+            </field>
+            <field name="groups"
+                   eval="[(4, ref('group_hospital_doctor'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="rule_visit_manager_all" model="ir.rule">
+            <field name="name">Manager: all visits</field>
+            <field name="model_id" ref="model_hr_hospital_visit"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups"
+                   eval="[(4, ref('group_hospital_manager'))]"/>
+        </record>
+
+    </data>
+</odoo>

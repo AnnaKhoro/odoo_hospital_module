@@ -1,0 +1,51 @@
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan">Hospital Management</h2>
+        <h3 class="oe_slogan">Complete clinic workflow inside Odoo</h3>
+    </div>
+    <div class="oe_row oe_spaced">
+        <p>
+            Manage doctors, patients, diseases, visits and reporting in one
+            module. Built for small clinics and training hospitals.
+        </p>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row">
+        <h2 class="oe_slogan">Key features</h2>
+        <ul>
+            <li><b>Doctors</b> with qualifications, intern/mentor relations,
+                kanban grouped by category.</li>
+            <li><b>Patients</b> with personal-doctor history, insurance,
+                medical attributes (blood type, gender, age).</li>
+            <li><b>Visits</b> with state machine (Planned / Completed /
+                Cancelled), calendar / pivot / graph / search views and
+                searchpanel.</li>
+            <li><b>Diseases</b> as a hierarchical classifier with
+                searchpanel filtering.</li>
+            <li><b>Wizards</b>: mass reassign personal doctor; visit report;
+                monthly disease report (with grouping by disease).</li>
+            <li><b>PDF report</b> for a doctor: visit history with colored
+                statuses + patients table.</li>
+            <li><b>Security</b>: cascading groups (Patient → Intern → Doctor
+                → Manager → Administrator) with record rules per visit.</li>
+            <li><b>i18n</b>: Ukrainian translation included.</li>
+        </ul>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row">
+        <h2 class="oe_slogan">Models</h2>
+        <ul>
+            <li><code>hr.hospital.doctor</code></li>
+            <li><code>hr.hospital.doctor.category</code></li>
+            <li><code>hr.hospital.doctor.history</code></li>
+            <li><code>hr.hospital.patient</code></li>
+            <li><code>hr.hospital.disease</code> (hierarchical)</li>
+            <li><code>hr.hospital.visit</code></li>
+            <li><code>hr.hospital.medic.info</code> (abstract)</li>
+        </ul>
+    </div>
+</section>

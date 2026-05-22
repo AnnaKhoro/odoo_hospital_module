@@ -2,6 +2,12 @@ from odoo import api, fields, models
 
 
 class HospitalDoctorHistory(models.Model):
+    """Personal doctor history for a patient.
+
+    Created automatically when a patient's personal doctor changes
+    (see ``hr.hospital.patient.write``). Used for audit / reporting.
+    """
+
     _name = 'hr.hospital.doctor.history'
     _description = 'Personal Doctor History'
     _order = 'assignment_date desc, id desc'
@@ -38,6 +44,7 @@ class HospitalDoctorHistory(models.Model):
 
     @api.depends('patient_id', 'doctor_id', 'doctor_id.category_id', 'assignment_date')
     def _compute_display_name(self):
+        """Format: ``<patient> - <doctor> (<category>) <assignment_date>``."""
         for rec in self:
             patient = rec.patient_id.name or ''
             doctor = rec.doctor_id.name or ''

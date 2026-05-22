@@ -25,12 +25,15 @@
                     <button name="action_mark_done" type="object"
                             string="Mark as completed"
                             class="btn-primary"
+                            groups="hr_hospital.group_hospital_intern"
                             invisible="state == 'done'"/>
                     <button name="action_cancel" type="object"
                             string="Cancel visit"
+                            groups="hr_hospital.group_hospital_intern"
                             invisible="state in ('cancelled', 'done')"/>
                     <button name="action_reset_to_planned" type="object"
                             string="Reset to planned"
+                            groups="hr_hospital.group_hospital_intern"
                             invisible="state == 'planned'"/>
                     <field name="state" widget="statusbar"
                            statusbar_visible="planned,done,cancelled"/>
@@ -49,9 +52,12 @@
                     </div>
                     <group>
                         <group>
-                            <field name="patient_id"/>
-                            <field name="doctor_id"/>
-                            <field name="disease_id"/>
+                            <field name="patient_id"
+                                   options="{'no_open': True, 'no_create': True}"/>
+                            <field name="doctor_id"
+                                   options="{'no_open': True, 'no_create': True}"/>
+                            <field name="disease_id"
+                                   options="{'no_open': True, 'no_create': True}"/>
                         </group>
                         <group>
                             <field name="scheduled_date"/>

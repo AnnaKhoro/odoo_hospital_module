@@ -3,6 +3,13 @@ from odoo.exceptions import UserError, ValidationError
 
 
 class HospitalVisit(models.Model):
+    """Patient visit (appointment).
+
+    Lifecycle: ``planned`` → ``done`` (or ``cancelled``). Once completed,
+    scheduled date / doctor cannot be changed (constraint), and the
+    record cannot be deleted or archived.
+    """
+
     _name = 'hr.hospital.visit'
     _description = 'Patient Visit'
     _order = 'scheduled_date desc, id desc'

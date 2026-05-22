@@ -44,6 +44,7 @@
                             <field name="phone"/>
                             <field name="doctor_id"/>
                             <field name="insurance_policy_number"/>
+                            <field name="user_id"/>
                         </group>
                         <group>
                             <field name="gender"/>

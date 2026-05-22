@@ -4,7 +4,7 @@
     'author': 'Anna Khoroshylova',
     'category': 'Human Resources',
     'license': 'LGPL-3',
-    'version': '19.0.1.3.0',
+    'version': '19.0.1.4.0',
 
     'depends': [
         'base',
@@ -12,6 +12,7 @@
     ],
 
     'data': [
+        'security/hr_hospital_security.xml',
         'security/ir.model.access.csv',
 
         'data/doctor_category_data.xml',
@@ -47,6 +48,7 @@
     'auto_install': False,
 
     'images': [
+        'static/description/banner.png',
         'static/description/icon.png',
     ],
 }
